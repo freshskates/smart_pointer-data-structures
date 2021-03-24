@@ -50,6 +50,7 @@ public:
         }
         cout << "null" << endl;
     }
+
     void insert(int n, string&& data) {
         if (n == 0) {
             shift(move(data));
@@ -65,7 +66,20 @@ public:
         next = current->next;
         current->next = temp; 
         temp->next = next; 
+        nodes++;
     }
+    
+    shared_ptr<Node> containsVal(string&& data) {
+        shared_ptr<Node> current = this->root;
+        while (current != nullptr) {
+            if (current->data == data) return current; 
+            current = current->next;
+        }
+        return nullptr; 
+    }
+    
+
+
     void reverse() {
         shared_ptr<Node> current = this->root, previous = nullptr, next = nullptr;
         tail = current; 
@@ -82,7 +96,6 @@ public:
 };
 
 
-
 int main()
 {
  
@@ -97,7 +110,10 @@ int main()
     list0.insert(0, "newuser2");
     list0.insert(2, "newuser3");
     list0.insert(0, "newuser4");
+    list0.insert(20, "final");
     list0.print();
+
+    cout << list0.containsVal("final")->data << endl;
 
 }
 
