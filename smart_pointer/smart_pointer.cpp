@@ -51,10 +51,11 @@ public:
         cout << "null" << endl;
     }
 
-    void insert(int n, string&& data) {
+    bool insert(int n, string&& data) {
+        if (n > nodes) return false; 
         if (n == 0) {
             shift(move(data));
-            return; 
+            return true; 
         }
         shared_ptr<Node>temp = make_shared<Node>(move(data));
         int count = 0; 
@@ -67,6 +68,7 @@ public:
         current->next = temp; 
         temp->next = next; 
         nodes++;
+        return true; 
     }
     
     shared_ptr<Node> containsVal(string&& data) {
@@ -110,10 +112,14 @@ int main()
     list0.insert(0, "newuser2");
     list0.insert(2, "newuser3");
     list0.insert(0, "newuser4");
-    list0.insert(20, "final");
     list0.print();
-
-    cout << list0.containsVal("final")->data << endl;
-
+    if (!list0.insert(20, "final")) {
+        cout << "Could not add" << endl; 
+    }
+    shared_ptr<Node> test = list0.containsVal("final");
+    if (test)
+        cout << test->data << endl;
+    else
+        cout << "couldnt find value" << endl;
 }
 
