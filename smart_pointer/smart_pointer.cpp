@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string> 
+#include <memory>
 using namespace std; 
 
 class Node {
@@ -6,8 +8,8 @@ public:
     shared_ptr<Node> next;
     string data;
     Node() {};
-    Node(string&& data) : data{ data }, next{ nullptr } {}
-    Node(string& data) : data{ data}, next{ nullptr } {}
+    Node(string&& data) : data(data), next{ nullptr } {};
+    Node(string& data) : data(data), next{ nullptr } {}
     
 };
     
@@ -26,7 +28,7 @@ public:
     }
 
     void push(string&& data) {
-        shared_ptr<Node>temp{ make_shared<Node>(move(data)) };
+        shared_ptr<Node>temp= make_shared<Node>(move(data)) ;
         if (tail == nullptr || root == nullptr)
             root = (tail = temp);
         else {
@@ -48,7 +50,22 @@ public:
         }
         cout << "null" << endl;
     }
-
+    void insert(int n, string&& data) {
+        if (n == 0) {
+            shift(move(data));
+            return; 
+        }
+        shared_ptr<Node>temp = make_shared<Node>(move(data));
+        int count = 0; 
+        shared_ptr<Node> current = this->root, next;
+        while (current->next != nullptr && count < n - 1) {
+            current = current->next;
+            count++;
+        }
+        next = current->next;
+        current->next = temp; 
+        temp->next = next; 
+    }
     void reverse() {
         shared_ptr<Node> current = this->root, previous = nullptr, next = nullptr;
         tail = current; 
@@ -61,7 +78,7 @@ public:
         }
         root = previous; 
     }
-
+   
 };
 
 
@@ -70,22 +87,17 @@ int main()
 {
  
     List list0; 
-    list0.push("testing");
-    list0.push("testing1");
-    list0.push("testing2");
-    list0.push("testing3");
-    list0.push("testing4");
-    list0.shift("testing69");
+    int n = 10, id = 0;
+    string base = "user_";
+    for (int i = 0; i < n; i++)
+        list0.push(base + to_string(++id));
+    
     list0.print();
-    list0.reverse();
+    list0.insert(0, "newuser1");
+    list0.insert(0, "newuser2");
+    list0.insert(2, "newuser3");
+    list0.insert(0, "newuser4");
     list0.print();
-    list0.print();
-    list0.print();
-    list0.reverse();
-    list0.print();
-    list0.print();
-
-    cout << list0.length() << endl;
 
 }
 
