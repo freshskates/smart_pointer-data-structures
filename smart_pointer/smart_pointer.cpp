@@ -112,14 +112,15 @@ int main()
     list0.insert(0, "newuser2");
     list0.insert(2, "newuser3");
     list0.insert(0, "newuser4");
+
     list0.print();
     if (!list0.insert(20, "final")) {
         cout << "Could not add" << endl; 
     }
+    
     shared_ptr<Node> test = list0.containsVal("final");
-    if (test)
-        cout << test->data << endl;
-    else
-        cout << "couldnt find value" << endl;
+  
+    cout << (test ? test->data : "couldnt find value") << endl;
+    
 }
 
