@@ -102,7 +102,7 @@ int main()
 {
  
     List list0; 
-    int n = 10, id = 0;
+    int n = 10000, id = 0;
     string base = "user_";
     for (int i = 0; i < n; i++)
         list0.push(base + to_string(++id));
@@ -119,7 +119,8 @@ int main()
     }
     
     shared_ptr<Node> test = list0.containsVal("final");
-  
+    //int*& foo = { 1,2 };
+
     cout << (test ? test->data : "couldnt find value") << endl;
     
 }
